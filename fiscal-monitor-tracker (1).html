@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Fiscal Monitor Tracker — IMF</title>
+</head>
+<body style="background:#f5f5f5;min-height:100vh;display:flex;justify-content:center;padding:2rem 1rem">
+<div style="max-width:740px;width:100%;background:#fff;border-radius:10px;padding:2rem 1.5rem 2.5rem;box-shadow:0 1px 4px rgba(0,0,0,.08)">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Aller:ital,wght@0,300;0,700;1,300&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Aller',sans-serif!important}
+
+:root{
+  --g:#7BC143; --g2:#B3D88C; --g4:#E1F1D3;
+  --c:#E07F5C; --cl:#EAA992;
+  --sl:#5D7082;
+  --gr3:#BEBEBE; --gr4:#E6E6E6; --cb:#EBEBEB;
+  --warn:#D9A441; --hot:#E07F5C;
+}
+
+.w{font-family:'Aller',sans-serif;font-weight:300;padding:1.5rem 1rem 2rem;max-width:700px;color:#000;margin:0 auto}
+
+.wh{margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between}
+.wh h2{font-size:20px;font-weight:700;color:var(--g);letter-spacing:-.01em}
+.pub-badge{font-size:10px;font-weight:700;letter-spacing:.08em;color:#1a9fcc;text-transform:uppercase;white-space:nowrap}
+
+.tabs{display:flex;gap:5px;margin-bottom:1.25rem;padding-bottom:1.1rem;border-bottom:1px solid var(--gr4);flex-wrap:wrap;align-items:center}
+.tb,.tbg{padding:6px 14px;font-size:12px;border-radius:4px;cursor:pointer;transition:all .15s;border:none}
+.tb{font-weight:300;border:1px solid var(--gr3)!important;background:transparent;color:#000}
+.tb:hover{background:var(--gr4)}
+.tb.active{background:var(--sl);border-color:var(--sl)!important;color:#fff;font-weight:700}
+.tbg{font-weight:300;border:1px solid var(--g2)!important;background:transparent;color:var(--sl)}
+.htabs{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap}
+.hsb{padding:5px 12px;font-size:11.5px;border-radius:14px;cursor:pointer;transition:all .15s;border:1px solid var(--gr3);background:transparent;color:var(--sl);font-weight:400}
+.hsb.active{background:var(--g);border-color:var(--g)!important;color:#fff;font-weight:700}
+.hgroup{display:none}
+.hgroup.active{display:block}
+.tbg:hover{background:var(--g4)}
+.tbg.active{background:var(--g);border-color:var(--g)!important;color:#fff;font-weight:700}
+.mp{display:none}.mp.active{display:block}
+.vtag{font-size:9px;font-weight:700;color:var(--sl);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+
+.strip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+.mc-sm{background:var(--cb);border-radius:6px;padding:9px 11px;border:1px solid #d4d4d4;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.mc-sm .ml{font-size:9px;color:var(--sl);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;font-weight:300}
+.mc-sm .mv{font-size:17px;font-weight:700;color:#000;line-height:1}
+.mc-sm .ms{font-size:10.5px;color:var(--sl);margin-top:4px;font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.tr{display:flex;gap:7px;margin-bottom:10px;align-items:stretch}
+.mc{background:var(--cb);border-radius:6px;padding:10px;border:1px solid #d4d4d4}
+.ml{font-size:9px;color:var(--sl);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;font-weight:300}
+.mv{font-size:16px;font-weight:700;color:#000;line-height:1}
+.ms{font-size:11px;color:#000;margin-top:4px;font-weight:300}
+.mc.ffr{min-width:120px;flex-shrink:0}
+.mgrp{border:1px solid #d4d4d4;border-radius:6px;padding:8px 10px 10px;flex:1}
+.mgrp-title{font-size:9px;color:var(--sl);text-transform:uppercase;letter-spacing:.06em;font-weight:300;margin-bottom:7px}
+.mgrp-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.bh{display:inline-block;font-size:9px;padding:2px 6px;border-radius:3px;font-weight:700;background:var(--sl);color:#fff}
+
+.exec{background:#EAF0F5;border:1px solid #C7D3DC;border-radius:8px;padding:13px 16px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.exec-t{font-size:10.5px;font-weight:700;color:#34495E;text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px}
+.exec ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.exec li{position:relative;padding-left:14px;font-size:11.5px;line-height:1.5;color:#24313d;font-weight:300}
+.exec li::before{content:'';position:absolute;left:0;top:5px;width:0;height:0;border-style:solid;border-width:4px 0 4px 6px;border-color:transparent transparent transparent #34495E}
+.exec li b{font-weight:700}
+
+.sec{background:#fff;border:1px solid var(--gr4);border-radius:6px;padding:13px 15px;margin-bottom:8px}
+.st{font-size:10px;font-weight:700;color:#000;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--gr4)}
+
+.bdg{font-size:11.5px;font-weight:700;letter-spacing:0}
+
+.kvb{background:var(--gr4);border-radius:5px;overflow:hidden;margin:10px 0}
+.kvr{display:grid;grid-template-columns:170px 1fr;gap:0;padding:7px 12px;border-bottom:1px solid #d8d8d8;align-items:center}
+.kvr:last-child{border-bottom:none}
+.kvl{display:flex;flex-direction:column;gap:2px}
+.kvt{font-size:10px;color:var(--sl);text-transform:uppercase;letter-spacing:.04em;font-weight:300}
+.kvv{font-size:12px;color:#000;font-weight:700}
+.kvn{font-size:12px;color:#000;font-weight:300;line-height:1.4}
+
+.spb{background:var(--gr4);border-radius:5px;overflow:hidden}
+.spr{display:grid;grid-template-columns:175px 55px 1fr;gap:0;padding:7px 12px;border-bottom:1px solid #d8d8d8;align-items:center}
+.spr:last-child{border-bottom:none}
+.spl{font-size:12px;color:var(--sl);font-weight:300}
+.spv{font-size:12px;font-weight:700;color:#000}
+.spn{font-size:12px;color:#000;font-weight:300}
+.aru{color:var(--c);font-size:16px;font-weight:700;margin-left:6px;font-style:normal;vertical-align:middle;line-height:1}
+.ard{color:var(--g);font-size:16px;font-weight:700;margin-left:6px;font-style:normal;vertical-align:middle;line-height:1}
+
+.tg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ti{padding:10px 11px;border-radius:5px;background:var(--gr4)}
+.til{font-size:10px;color:var(--sl);margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em;font-weight:300}
+.tiv{font-size:12px;color:#000;font-weight:700}
+.tin{font-size:12px;color:#000;margin-top:3px;line-height:1.4;font-weight:300}
+.tor{display:flex;align-items:center;gap:8px;margin-top:8px}
+.tol{font-size:11px;font-weight:300;white-space:nowrap}
+.tol.dove{color:var(--g)}.tol.hawk{color:var(--c)}
+.tt2{flex:1;height:5px;border-radius:3px;background:var(--gr3);position:relative}
+.tn{position:absolute;top:-3px;width:11px;height:11px;border-radius:50%;background:var(--c);border:2px solid #fff;transform:translateX(-50%);box-shadow:0 0 0 1px var(--c)}
+
+.rl{list-style:none;display:flex;flex-direction:column;gap:6px}
+.ri{display:flex;align-items:center;gap:7px;font-size:12px;color:#000;line-height:1.4;font-weight:300}
+.rt{flex-shrink:0;width:0;height:0;border-style:solid}
+.rh{border-width:5px 0 5px 8px;border-color:transparent transparent transparent var(--c)}
+.rm{border-width:5px 0 5px 8px;border-color:transparent transparent transparent var(--cl)}
+.rg{border-width:5px 0 5px 8px;border-color:transparent transparent transparent var(--g)}
+
+.vr{display:flex;gap:5px;flex-wrap:wrap;margin:10px 0 6px}
+.vc{font-size:11px;padding:3px 9px;border-radius:3px;font-weight:300}
+.vf{background:var(--gr4);color:#000;border:1px solid var(--gr3)}
+.vd{background:var(--g4);color:#000;border:1px solid var(--g2)}
+.vh{background:#fdeee9;color:var(--c);border:1px solid var(--cl)}
+.vn{position:relative;padding-left:15px;font-size:12px;color:#000;margin-top:6px;line-height:1.5;font-weight:300}
+.vn::before{content:'';position:absolute;left:0;top:6px;width:0;height:0;border-style:solid;border-width:4px 0 4px 6px;border-color:transparent transparent transparent var(--g)}
+
+.qb{background:var(--gr4);border-left:3px solid var(--gr3);padding:10px 13px;border-radius:0 5px 5px 0;font-size:12px;color:#000;line-height:1.6;font-weight:300;font-style:italic;margin-top:10px}
+.qb b{font-weight:700;font-style:italic}
+.qa{font-size:11px;color:var(--sl);margin-top:6px;font-style:normal;font-weight:300}
+
+.ii{border-left:3px solid var(--gr3);padding:7px 11px;margin-bottom:6px;background:var(--gr4);border-radius:0 5px 5px 0}
+.ii.hi{border-left-color:var(--c)}.ii.me{border-left-color:var(--cl)}.ii.lo{border-left-color:var(--g)}
+.iit{font-size:12px;font-weight:700;color:#000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iib{font-size:12px;color:#000;line-height:1.3;font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+
+.note{font-size:10px;color:var(--sl);font-style:italic;margin-top:14px;padding-top:10px;border-top:1px solid var(--gr4);line-height:1.4}
+.pdfbtn{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--sl);text-decoration:none;border:1px solid var(--gr3);background:var(--cb);padding:7px 14px;border-radius:6px;margin-top:8px;font-weight:700;transition:.15s}
+.pdfbtn .picon{font-size:16px}
+.pdfbtn:hover{background:var(--gr4);border-color:var(--sl)}
+
+.tooltip{position:fixed;background:#1B2127;color:#fff;font-size:11px;font-weight:300;padding:5px 9px;border-radius:4px;pointer-events:none;display:none;z-index:9999;white-space:nowrap;line-height:1.6}
+
+.cs{background:#fff;border:1px solid var(--gr4);border-radius:6px;padding:13px 15px;margin-bottom:8px}
+.ct{font-size:10px;font-weight:700;color:#000;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--gr4)}
+.cw{width:100%;position:relative;cursor:crosshair}
+.cw canvas{display:block}
+.cl{display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;justify-content:center}
+.li{display:flex;align-items:center;gap:5px;font-size:11px;color:#000;font-weight:300}
+.ll{width:16px;height:2px;border-radius:1px;flex-shrink:0}
+.lb{width:11px;height:11px;border-radius:2px;flex-shrink:0}
+.cnote{font-size:10px;color:var(--sl);margin-top:5px;font-style:italic;font-weight:300}
+
+</style>
+
+<div class="tooltip" id="tooltip"></div>
+<div class="w">
+
+  <!-- ====================== HEADER ====================== -->
+  <div class="wh">
+    <h2>Fiscal Monitor Tracker</h2>
+    <span class="pub-badge">PUBLIC INFORMATION</span>
+  </div>
+
+  <!-- ====================== TABS ======================
+       Summary = KPIs and risk balance
+       Charts = debt / balance / change by country
+       Debt History = country/region breakdown, 2019–2030 -->
+  <div class="tabs" id="tabs">
+    <button class="tb active" onclick="sp('panelA',this)">Summary</button>
+    <button class="tbg" onclick="sp('charts',this)">Charts</button>
+    <button class="tbg" onclick="sp('desglose',this)">Debt History</button>
+  </div>
+
+  <!-- ====================== PANEL A — GLOBAL SUMMARY ====================== -->
+  <div class="mp active" id="panel-panelA">
+
+    <div class="cnote" style="margin-top:0;margin-bottom:16px">Source: IMF, data as of April 2026</div>
+    <div class="strip" style="grid-template-columns:repeat(4,1fr)">
+      <div class="mc-sm"><div class="ml">World Debt 2031 (proj.)</div><div class="mv">102.3%</div><div class="ms"><span class="bh">↑ Rising</span></div></div>
+      <div class="mc-sm"><div class="ml">World Debt 2025</div><div class="mv">93.9%</div><div class="ms">of GDP, gen. gov. gross</div></div>
+      <div class="mc-sm"><div class="ml">World Deficit 2025</div><div class="mv">−5.0%</div><div class="ms">of GDP; almost unchanged vs. 2024</div></div>
+      <div class="mc-sm"><div class="ml">Debt-at-Risk 2028</div><div class="mv">117.2%</div><div class="ms">95th percentile, 3-year horizon</div></div>
+    </div>
+
+    <div class="exec">
+      <div class="exec-t">Executive Summary</div>
+      <ul>
+        <li><b>Debt heading toward 100% of GDP:</b> global gross debt would reach that threshold in 2029, a level seen only after World War II, worsened by the war in the Middle East.</li>
+        <li><b>The fiscal gap has nearly disappeared:</b> from a 1.2% of GDP cushion in 2014–19 to just 0.1% in 2024–29.</li>
+        <li><b>The US and China drive the increase:</b> projected 2031 debt of 142.1% and 126.8% of GDP, respectively.</li>
+        <li><b>Japan is the exception:</b> its debt would fall by ~14 points of GDP by 2031 due to higher inflation and nominal growth.</li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="st">Key change (vs. Fiscal Monitor, October 2025)</div>
+      <div class="exec" style="background:transparent;border:none;box-shadow:none;padding:0;margin-bottom:0">
+        <ul>
+          <li><b>Erosion of the US Treasury premium:</b> higher bond supply and a smaller Fed footprint are compressing the "convenience yield," raising global financing costs.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="st">Risk balance</div>
+      <ul class="rl">
+        <li class="ri"><span class="rt rh"></span>Prolonged war in the Middle East: +4.0pp of global debt-at-risk, concentrated in emerging markets (+6.2pp).</li>
+        <li class="ri"><span class="rt rh"></span>Erosion of central bank independence under high-debt pressure.</li>
+        <li class="ri"><span class="rt rm"></span>AI asset correction (−20% in US equities): +2.4pp of global debt-at-risk.</li>
+        <li class="ri"><span class="rt rg"></span>A positive AI productivity surprise could improve debt dynamics.</li>
+      </ul>
+    </div>
+
+    <div class="sec">
+      <div class="st">Key quote</div>
+      <div class="qb">Countries that rebuild fiscal buffers in calm times will be better prepared to protect their citizens when shocks arrive. <b>Those that don't may find, in the next test, that fiscal space cannot be improvised.</b></div>
+      <div class="qa">— Rodrigo Valdés, Director, Fiscal Affairs Department, IMF</div>
+    </div>
+
+    <a class="pdfbtn" href="https://www.imf.org/publications/fm" target="_blank"><span class="picon">📄</span> View full Fiscal Monitor (IMF, April 2026)</a>
+  </div>
+
+  <!-- ====================== PANEL CHARTS ====================== -->
+  <div class="mp" id="panel-charts">
+    <div class="cs">
+      <div class="ct">Gross debt by group (% of GDP, 2019–2031)</div>
+      <div class="cw" id="w0"><canvas id="c0"></canvas></div>
+      <div class="cl">
+        <span class="li"><span class="ll" style="background:#7BC143"></span>World</span>
+        <span class="li"><span class="ll" style="background:#5D7082"></span>Advanced</span>
+        <span class="li"><span class="ll" style="background:#B3D88C"></span>Emerging</span>
+        <span class="li"><span class="ll" style="background:#E07F5C"></span>Low-income</span>
+      </div>
+      <div class="cnote">Dashed line: 100% of GDP threshold, reached in 2029 under the reference projection. Source: Tables A7/A15/A21, IMF, April 2026.</div>
+    </div>
+
+    <div class="cs">
+      <div class="ct">Overall fiscal balance (% of GDP, 2019–2031)</div>
+      <div class="cw" id="w1"><canvas id="c1"></canvas></div>
+      <div class="cl">
+        <span class="li"><span class="ll" style="background:#7BC143"></span>World</span>
+        <span class="li"><span class="ll" style="background:#5D7082"></span>Advanced</span>
+        <span class="li"><span class="ll" style="background:#B3D88C"></span>Emerging</span>
+        <span class="li"><span class="ll" style="background:#E07F5C"></span>Low-income</span>
+      </div>
+      <div class="cnote">Source: Tables A1/A9/A17, IMF, April 2026.</div>
+    </div>
+
+    <div class="cs">
+      <div class="ct">Change in debt 2025 → 2031 by country (points of GDP)</div>
+      <div class="cw" id="w2"><canvas id="c2"></canvas></div>
+      <div class="cnote">Coral: projected debt rises. Green: falls. Out-of-range values are annotated separately.</div>
+    </div>
+
+    <div class="cs">
+      <div class="ct">Gross debt: advanced vs. emerging (% of GDP by year)</div>
+      <div class="cw" id="w3"><canvas id="c3"></canvas></div>
+      <div class="cl">
+        <span class="li"><span class="lb" style="background:#5D7082"></span>Advanced</span>
+        <span class="li"><span class="lb" style="background:#7BC143"></span>Emerging</span>
+      </div>
+      <div class="cnote">Source: Table 1.2, IMF Fiscal Monitor, April 2026.</div>
+    </div>
+
+    <div class="cs">
+      <div class="ct">Net debt: advanced vs. emerging (% of GDP by year)</div>
+      <div class="cw" id="w4"><canvas id="c4"></canvas></div>
+      <div class="cl">
+        <span class="li"><span class="lb" style="background:#5D7082"></span>Advanced</span>
+        <span class="li"><span class="lb" style="background:#7BC143"></span>Emerging</span>
+      </div>
+      <div class="cnote">Net debt = gross debt minus financial assets. Source: Tables A8/A16, IMF, April 2026. The emerging-market average excludes countries without published net debt data (e.g., China, India).</div>
+    </div>
+  </div>
+
+  <!-- ====================== PANEL COUNTRY BREAKDOWN (historical, mirrors PDF) ====================== -->
+  <div class="mp" id="panel-desglose">
+
+    <div class="htabs" id="htabs">
+      <button class="hsb active" onclick="sd('agg',this)">World Aggregates</button>
+      <button class="hsb" onclick="sd('dev',this)">Developed Economies</button>
+      <button class="hsb" onclick="sd('em',this)">Emerging Economies</button>
+    </div>
+
+    <div class="hgroup active" id="hg-agg">
+      <div class="cs">
+        <div class="ct">Gross debt % of GDP — Advanced G-20 vs. Emerging</div>
+        <div class="cw" id="wh0"><canvas id="ch0"></canvas></div>
+        <div class="cnote" id="lgh0"></div>
+      </div>
+      <div class="cs">
+        <div class="ct">Net debt % of GDP — Advanced G-20</div>
+        <div class="cw" id="wh1"><canvas id="ch1"></canvas></div>
+        <div class="cnote" id="lgh1"></div>
+      </div>
+    </div>
+
+    <div class="hgroup" id="hg-dev">
+      <div class="cs">
+        <div class="ct">Advanced economies — Gross debt % of GDP</div>
+        <div class="cw" id="wh2"><canvas id="ch2"></canvas></div>
+        <div class="cnote" id="lgh2"></div>
+      </div>
+      <div class="cs">
+        <div class="ct">Advanced economies — Net debt % of GDP</div>
+        <div class="cw" id="wh3"><canvas id="ch3"></canvas></div>
+        <div class="cnote" id="lgh3"></div>
+      </div>
+    </div>
+
+    <div class="hgroup" id="hg-em">
+      <div class="cs">
+        <div class="ct">Emerging economies by region — Gross debt % of GDP</div>
+        <div class="cw" id="wh4"><canvas id="ch4"></canvas></div>
+        <div class="cnote" id="lgh4"></div>
+        <div class="cnote">Net debt by region not included in the IMF's Table 1.2 used as source.</div>
+      </div>
+
+      <div class="cs">
+        <div class="ct">Latin America — Gross debt % of GDP</div>
+        <div class="cw" id="wh5"><canvas id="ch5"></canvas></div>
+        <div class="cnote" id="lgh5"></div>
+      </div>
+
+      <div class="cs">
+        <div class="ct">Emerging Asia — Gross debt % of GDP</div>
+        <div class="cw" id="wh6"><canvas id="ch6"></canvas></div>
+        <div class="cnote" id="lgh6"></div>
+      </div>
+
+      <div class="cs">
+        <div class="ct">Emerging Europe — Gross debt % of GDP</div>
+        <div class="cw" id="wh7"><canvas id="ch7"></canvas></div>
+        <div class="cnote" id="lgh7"></div>
+      </div>
+    </div>
+
+    <div class="cnote">Source: IMF, IMF DataMapper (indicator GGXWDG_NGDP, WEO/Fiscal Monitor April 2026) and Fiscal Monitor, April 2026, Table 1.2 and Tables A7/A8 of the Methodological and Statistical Appendix. Series without published net debt at the individual emerging-market country, region, or Greece level are left out of the corresponding charts rather than estimated.</div>
+  </div>
+
+</div>
+</div>
+
+<script>
+/* ============================================================
+   BASE JS — tab navigation, tooltip, and chart engine.
+   ============================================================ */
+const tip=document.getElementById('tooltip');
+function showT(e,h){
+  tip.innerHTML=h;tip.style.display='block';
+  const tw=tip.offsetWidth||180,vw=window.innerWidth,x=e.clientX;
+  if(x+tw+20>vw)tip.style.left=(x-tw-8)+'px';
+  else tip.style.left=(x+14)+'px';
+  tip.style.top=(e.clientY-28)+'px';
+}
+function hideT(){tip.style.display='none';}
+
+function sp(id,btn){
+  document.querySelectorAll('.mp').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tb,.tbg').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='charts')setTimeout(buildCharts,60);
+  if(id==='desglose')setTimeout(buildDesglose,60);
+}
+
+const BLU='#5D7082',GRN='#7BC143',CRL='#E07F5C',GR4='#E6E6E6';
+const F="'Aller',sans-serif";
+
+function autoAx(data){
+  const mn=Math.min(...data),mx=Math.max(...data),range=mx-mn||1;
+  let lo=mn>=0?0:mn-range*0.08,hi=mx+range*0.08;
+  const raw=(hi-lo)/5,mag=Math.pow(10,Math.floor(Math.log10(raw)));
+  const step=[0.5,1,2,2.5,5,10].map(f=>f*mag).find(s=>s>=raw)||1;
+  lo=Math.floor(lo/step)*step;hi=Math.ceil(hi/step)*step;
+  if(mn>=0&&lo>0)lo=0;
+  const tks=[];for(let v=lo;v<=hi+1e-9;v=+(v+step).toFixed(10))tks.push(+v.toFixed(6));
+  return{lo,hi,tks};
+}
+
+function rLine(cid,wid,datasets,tv,tl,lbl,xi,fixedMax){
+  const cv=document.getElementById(cid),wr=document.getElementById(wid);
+  if(!cv||!wr)return;
+  const DPR=window.devicePixelRatio||1,W=wr.offsetWidth,H=240;
+  cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';
+  const ctx=cv.getContext('2d');ctx.scale(DPR,DPR);
+  const PL=30,PR=8,PT=8,PB=48,cW=W-PL-PR,cH=H-PT-PB,n=datasets[0].d.length;
+  let ax;
+  if(fixedMax!=null){const s=5;const t=[];for(let v=0;v<=fixedMax;v+=s)t.push(v);ax={lo:0,hi:fixedMax,tks:t};}
+  else{ax=autoAx(datasets.flatMap(d=>d.d));}
+  const yr=ax.hi-ax.lo,xp=i=>PL+(i/(n-1))*cW,yp=v=>PT+cH-((v-ax.lo)/yr)*cH;
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  ax.tks.forEach(v=>{const y=yp(v),iz=Math.abs(v)<1e-4;ctx.strokeStyle=iz?'rgba(0,0,0,0.15)':GR4;ctx.lineWidth=iz?1:0.5;ctx.beginPath();ctx.moveTo(PL,y);ctx.lineTo(PL+cW,y);ctx.stroke();ctx.fillStyle='#000';ctx.font='10px '+F;ctx.textAlign='right';ctx.fillText(v%1===0?v.toFixed(0):v.toFixed(1),PL-3,y+3);});
+  if(tv!=null){const yt=yp(tv);ctx.strokeStyle=CRL;ctx.lineWidth=1.2;ctx.setLineDash([5,3]);ctx.beginPath();ctx.moveTo(PL,yt);ctx.lineTo(PL+cW,yt);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=CRL;ctx.font='bold 10px '+F;ctx.textAlign='right';ctx.fillText(tl,PL+cW-2,yt-4);}
+  ctx.fillStyle='#000';ctx.font='bold 10px '+F;ctx.textAlign='center';
+  xi.forEach((idx)=>{if(idx>=n)return;ctx.fillText(lbl[idx]?lbl[idx].split(' ').pop():'',xp(idx),H-PB+16);});
+  datasets.forEach(ds=>{ctx.strokeStyle=ds.c;ctx.lineWidth=ds.w||2;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();ds.d.forEach((v,i)=>i===0?ctx.moveTo(xp(i),yp(v)):ctx.lineTo(xp(i),yp(v)));ctx.stroke();ctx.fillStyle=ds.c;ctx.beginPath();ctx.arc(xp(n-1),yp(ds.d[n-1]),3,0,Math.PI*2);ctx.fill();});
+  cv.onmousemove=e=>{
+    const r=cv.getBoundingClientRect(),mx=e.clientX-r.left;
+    if(mx<PL||mx>PL+cW){hideT();return;}
+    let ci=0,md=Infinity;
+    for(let i=0;i<n;i++){const d=Math.abs(xp(i)-mx);if(d<md){md=d;ci=i;}}
+    const lines=datasets.map(ds=>'<span style="color:'+ds.c+'">&#9679;</span> '+ds.lbl+': <b>'+ds.d[ci].toFixed(1)+'%</b>').join('<br>');
+    showT(e,'<span style="opacity:.65">'+(lbl[ci]||'')+'</span><br>'+lines);
+  };
+  cv.onmouseleave=hideT;
+}
+
+function rBars(cid,wid,data,clip,lbl_title,xLabels,xi){
+  const cv=document.getElementById(cid),wr=document.getElementById(wid);
+  if(!cv||!wr)return;
+  const DPR=window.devicePixelRatio||1,W=wr.offsetWidth,H=260;
+  cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';
+  const ctx=cv.getContext('2d');ctx.scale(DPR,DPR);
+  const PL=30,PR=8,PT=8,PB=70,cW=W-PL-PR,cH=H-PT-PB,n=data.length;
+  const yMin=-clip,yMax=clip,yr=yMax-yMin,bW=(cW/n)*0.7;
+  const xp=i=>PL+(i/n)*cW+(cW/n)*0.15,yp=v=>PT+cH-((v-yMin)/yr)*cH,y0=yp(0);
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  for(let v=-clip;v<=clip;v+=Math.max(1,Math.round(clip/4))){const y=yp(v),iz=v===0;ctx.strokeStyle=iz?'rgba(0,0,0,0.15)':GR4;ctx.lineWidth=iz?1:0.5;ctx.beginPath();ctx.moveTo(PL,y);ctx.lineTo(PL+cW,y);ctx.stroke();ctx.fillStyle='#000';ctx.font='10px '+F;ctx.textAlign='right';ctx.fillText(v,PL-3,y+3);}
+  data.forEach((v,i)=>{
+    const cl=Math.max(-clip,Math.min(clip,v)),ip=v>=0,bH=Math.abs(yp(cl)-y0),bY=ip?y0-bH:y0;
+    ctx.fillStyle=ip?CRL:GRN;ctx.fillRect(xp(i),bY,bW,bH);
+    if(Math.abs(v)>clip){ctx.fillStyle=ip?CRL:GRN;ctx.font='bold 8px '+F;ctx.textAlign='center';ctx.fillText((v>0?'+':'')+v.toFixed(1),xp(i)+bW/2,ip?bY-3:bY+bH+9);}
+  });
+  ctx.fillStyle='#000';ctx.font='10px '+F;ctx.textAlign='right';
+  if(xi&&xLabels)xi.forEach(idx=>{if(idx>=n)return;ctx.save();ctx.translate(xp(idx)+bW/2,H-PB+16);ctx.rotate(-Math.PI/4);ctx.fillText(xLabels[idx],0,0);ctx.restore();});
+  cv.onmousemove=e=>{
+    const r=cv.getBoundingClientRect(),mx=e.clientX-r.left;
+    if(mx<PL||mx>PL+cW){hideT();return;}
+    let ci=0,md=Infinity;
+    for(let i=0;i<n;i++){const cx=xp(i)+bW/2,d=Math.abs(cx-mx);if(d<md){md=d;ci=i;}}
+    const v=data[ci];
+    showT(e,'<span style="opacity:.65">'+(xLabels?xLabels[ci]:'')+'</span><br><span style="color:'+(v>=0?CRL:GRN)+'">&#9679;</span> '+lbl_title+': <b>'+(v>0?'+':'')+v.toFixed(1)+'pp</b>'+(Math.abs(v)>clip?' <span style="opacity:.6">(clipped)</span>':''));
+  };
+  cv.onmouseleave=hideT;
+}
+
+/* Grouped bar chart: multiple series per category (year or country).
+   categories: X-axis labels. series: [{lbl,c,d:[values or null]}].
+   Null values are skipped (annotated "n/a" at the base). */
+function rGroupedBars(cid,wid,categories,series,H,PB,rotate){
+  const cv=document.getElementById(cid),wr=document.getElementById(wid);
+  if(!cv||!wr)return;
+  H=H||210;PB=PB||48;rotate=(rotate===undefined)?true:rotate;
+  const DPR=window.devicePixelRatio||1,W=wr.offsetWidth;
+  cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';
+  const ctx=cv.getContext('2d');ctx.scale(DPR,DPR);
+  const PL=30,PR=8,PT=8,cW=W-PL-PR,cH=H-PT-PB,n=categories.length,ns=series.length;
+  const allVals=series.flatMap(s=>s.d.filter(v=>v!=null));
+  const mx=Math.max(...allVals,10),mag=Math.pow(10,Math.floor(Math.log10(mx/5||1)));
+  const step=[0.5,1,2,2.5,5,10].map(f=>f*mag).find(s=>s>=mx/5)||10;
+  const hi=Math.ceil(mx/step)*step;
+  const groupW=cW/n,barW=(groupW*0.72)/ns,gap=groupW*0.14;
+  const xg=i=>PL+i*groupW+gap,yp=v=>PT+cH-(v/hi)*cH,y0=yp(0);
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  for(let v=0;v<=hi+1e-6;v+=step){const y=yp(v);ctx.strokeStyle=v===0?'rgba(0,0,0,0.15)':GR4;ctx.lineWidth=v===0?1:0.5;ctx.beginPath();ctx.moveTo(PL,y);ctx.lineTo(PL+cW,y);ctx.stroke();ctx.fillStyle='#000';ctx.font='10px '+F;ctx.textAlign='right';ctx.fillText(Math.round(v),PL-3,y+3);}
+  for(let i=0;i<n;i++){
+    for(let j=0;j<ns;j++){
+      const v=series[j].d[i],bx=xg(i)+j*barW;
+      if(v==null){ctx.fillStyle=var_sl();ctx.font='8px '+F;ctx.textAlign='center';ctx.fillText('n/a',bx+barW/2,y0-4);continue;}
+      const bh=Math.max(0,y0-yp(v));
+      ctx.fillStyle=series[j].c;ctx.fillRect(bx,yp(v),barW*0.86,bh);
+    }
+    if(rotate){
+      ctx.fillStyle='#000';ctx.font='10px '+F;ctx.textAlign='right';
+      ctx.save();ctx.translate(xg(i)+(groupW*0.72)/2,H-PB+16);ctx.rotate(-Math.PI/4);ctx.fillText(categories[i],0,0);ctx.restore();
+    }else{
+      ctx.fillStyle='#000';ctx.font='bold 10px '+F;ctx.textAlign='center';
+      ctx.fillText(categories[i],xg(i)+(groupW*0.72)/2,H-PB+16);
+    }
+  }
+  cv.onmousemove=e=>{
+    const r=cv.getBoundingClientRect(),mx2=e.clientX-r.left;
+    if(mx2<PL||mx2>PL+cW){hideT();return;}
+    let ci=Math.floor((mx2-PL)/groupW);ci=Math.max(0,Math.min(n-1,ci));
+    const lines=series.map(s=>'<span style="color:'+s.c+'">&#9679;</span> '+s.lbl+': <b>'+(s.d[ci]==null?'n/a':s.d[ci].toFixed(1)+'%')+'</b>').join('<br>');
+    showT(e,'<span style="opacity:.65">'+categories[ci]+'</span><br>'+lines);
+  };
+  cv.onmouseleave=hideT;
+}
+function var_sl(){return '#BEBEBE';}
+
+/* ---- REAL DATA: IMF, Fiscal Monitor, April 2026 ---- */
+const YEARS=['2019','2020','2021','2022','2023','2024','2025','2026','2027','2028','2029','2030','2031'];
+const DEBT_WORLD=[82.1,97.4,92.8,89.2,90.8,92.0,93.9,95.3,97.2,98.8,100.0,101.2,102.3];
+const DEBT_AE   =[100.9,119.3,112.9,107.9,107.0,107.6,108.0,108.2,109.4,110.9,112.2,113.5,114.8];
+const DEBT_EM   =[54.4,64.2,63.8,63.7,67.9,69.9,73.9,77.2,80.2,82.2,83.7,85.1,86.2];
+const DEBT_LIDC =[38.5,45.5,45.4,46.2,50.4,50.5,48.2,47.2,46.6,46.0,45.4,44.8,44.0];
+
+const BAL_WORLD=[-3.5,-9.5,-6.3,-3.7,-5.0,-5.1,-5.0,-5.2,-5.1,-5.1,-4.9,-4.9,-4.8];
+const BAL_AE   =[-3.0,-10.2,-7.3,-2.9,-4.9,-4.9,-4.4,-4.8,-4.7,-4.7,-4.6,-4.6,-4.5];
+const BAL_EM   =[-4.4,-8.6,-5.0,-4.8,-5.3,-5.5,-6.1,-6.0,-5.9,-5.7,-5.5,-5.4,-5.4];
+const BAL_LIDC =[-3.7,-5.0,-4.2,-4.2,-3.8,-3.0,-2.8,-3.5,-3.2,-3.2,-3.1,-3.1,-3.1];
+
+const NET_AE=[73.2,84.9,82.0,79.0,79.3,79.3,79.7,80.1,81.5,83.1,84.7,86.3,87.8];
+const NET_EM=[37.7,45.2,44.3,41.7,41.9,43.3,45.3,48.1,49.7,50.7,51.6,52.2,52.6];
+const YR_IDX=[0,2,4,6,8,10,12]; // 2019,2021,2023,2025,2027,2029,2031
+const YR_LBL=YR_IDX.map(i=>YEARS[i]);
+const pick=(arr)=>YR_IDX.map(i=>arr[i]);
+
+let built=false;
+function buildCharts(){
+  if(built)return;built=true;
+  rLine('c0','w0',
+    [{d:DEBT_WORLD,c:GRN,w:2.4,lbl:'World'},{d:DEBT_AE,c:BLU,w:2,lbl:'Advanced'},{d:DEBT_EM,c:'#B3D88C',w:2,lbl:'Emerging'},{d:DEBT_LIDC,c:CRL,w:2,lbl:'Low-income'}],
+    100,'100% of GDP',YEARS,[0,3,6,9,12],null
+  );
+  rLine('c1','w1',
+    [{d:BAL_WORLD,c:GRN,w:2.4,lbl:'World'},{d:BAL_AE,c:BLU,w:2,lbl:'Advanced'},{d:BAL_EM,c:'#B3D88C',w:2,lbl:'Emerging'},{d:BAL_LIDC,c:CRL,w:2,lbl:'Low-income'}],
+    null,null,YEARS,[0,3,6,9,12],null
+  );
+  const cNames=['US','China','Japan','Germany','France','UK','Italy','Canada','India','Brazil','Russia','South Africa','Saudi Arabia','Nigeria','Kenya'];
+  const cDelta=[18.2,27.6,-13.7,10.8,4.7,0.3,-1.0,-10.0,-6.4,13.2,11.9,4.0,10.5,-5.4,5.8];
+  rBars('c2','w2',cDelta,20,'Debt change 2025→2031',cNames,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]);
+
+  rGroupedBars('c3','w3',YR_LBL,[
+    {lbl:'Advanced',c:'#5D7082',d:pick(DEBT_AE)},
+    {lbl:'Emerging',c:GRN,d:pick(DEBT_EM)},
+  ],250,40,false);
+  rGroupedBars('c4','w4',YR_LBL,[
+    {lbl:'Advanced',c:'#5D7082',d:pick(NET_AE)},
+    {lbl:'Emerging',c:GRN,d:pick(NET_EM)},
+  ],250,40,false);
+}
+
+/* ============================================================
+   HISTORICAL DEBT 2019–2030 — same charts as the IMF PDF
+   Source: IMF DataMapper (GGXWDG_NGDP) + Fiscal Monitor April 2026,
+   Table 1.2 (aggregates and regions) and Tables A7/A8 (advanced, gross/net).
+   All series are real official data (history + IMF projection).
+   ============================================================ */
+const HY=['2019','2020','2021','2022','2023','2024','2025','2026e','2027e','2028e','2029e','2030e'];
+
+/* MFO brand green gradient: from a dark green to --g4 (#E1F1D3),
+   passing through a mid-tone green, --g (#7BC143) and --g2 (#B3D88C). */
+const MFO_GREEN_STOPS=[[31,77,18],[61,110,26],[123,193,67],[179,216,140],[225,241,211]];
+function greenGrad(i,n){
+  const t=n<=1?0:i/(n-1);
+  const seg=1/(MFO_GREEN_STOPS.length-1);
+  let k=Math.min(MFO_GREEN_STOPS.length-2,Math.floor(t/seg));
+  const lt=(t-k*seg)/seg,c1=MFO_GREEN_STOPS[k],c2=MFO_GREEN_STOPS[k+1];
+  const r=Math.round(c1[0]+(c2[0]-c1[0])*lt),g=Math.round(c1[1]+(c2[1]-c1[1])*lt),b=Math.round(c1[2]+(c2[2]-c1[2])*lt);
+  return 'rgb('+r+','+g+','+b+')';
+}
+/* obj: {key:[12 values by year]}, order: array of keys in the desired order (= X-axis categories) */
+function yearSeries(obj,order){
+  return HY.map((y,yi)=>({
+    lbl:y,
+    c:greenGrad(yi,HY.length),
+    d:order.map(k=>{const arr=obj[k];const v=arr?arr[yi]:null;return (v==null)?null:v;})
+  }));
+}
+function buildLegend(elId,n){
+  const el=document.getElementById(elId);if(!el)return;
+  let html='<div class="cl" style="margin-top:2px;font-style:normal">';
+  const step=Math.max(1,Math.round(n/6));
+  for(let i=0;i<n;i+=step){html+='<span class="li" style="font-weight:700;font-style:normal"><span class="lb" style="background:'+greenGrad(i,n)+'"></span>'+HY[i]+'</span>';}
+  html+='<span class="li" style="font-weight:700;font-style:normal"><span class="lb" style="background:'+greenGrad(n-1,n)+'"></span>'+HY[n-1]+'</span></div>';
+  el.innerHTML=html;
+}
+
+/* --- Aggregates: Advanced (ADVEC) vs. Emerging (OEMDC), IMF DataMapper --- */
+const HD_AE_G ={_:[100.9,119.3,112.9,107.9,107.0,107.6,108.0,108.2,109.4,110.9,112.2,113.5]};
+const HD_EM_G ={_:[54.4,64.2,63.8,63.7,67.9,69.9,73.9,77.2,80.2,82.2,83.7,85.1]};
+const HD_AE_N ={_:[73.2,84.9,82.0,79.0,79.3,79.3,79.7,80.1,81.5,83.1,84.7,86.3]};
+
+/* --- Advanced economies (Tables A7 / A8) --- */
+const HD_DEV_G={
+  us:[108.8,132.6,125.0,119.1,120.0,122.3,123.9,125.8,128.6,132.1,135.5,138.9],
+  gb:[84.9,104.8,103.4,97.5,98.9,99.9,102.3,103.6,104.1,103.9,103.5,102.9],
+  fr:[98.2,114.9,112.8,111.4,109.6,113.2,116.0,118.4,120.5,121.1,121.3,121.2],
+  it:[133.9,154.4,145.8,138.4,133.9,134.7,137.1,138.4,138.8,137.6,137.1,136.5],
+  pt:[116.1,134.1,123.9,111.2,96.9,93.5,89.9,85.6,82.2,79.3,77.0,75.5],
+  es:[97.6,119.2,115.6,109.2,105.1,101.6,100.4,98.2,96.2,94.2,92.9,91.7],
+  de:[58.7,68.0,67.9,64.4,62.3,62.2,62.9,64.6,66.5,68.4,70.2,72.0],
+  ie:[55.8,56.9,52.4,42.9,41.8,38.3,32.9,31.6,30.3,29.1,28.4,28.0],
+  jp:[206.3,228.8,222.7,227.8,220.3,214.5,206.5,204.4,200.1,197.7,195.7,193.9],
+  gr:[183.7,209.9,197.8,179.2,165.5,155.4,145.7,136.9,130.3,125.2,120.4,115.5],
+};
+const HD_DEV_N={
+  us:[81.6,95.9,95.2,91.3,94.0,95.7,96.7,98.5,101.3,104.8,108.3,111.9],
+  gb:[75.1,92.2,90.2,87.9,90.4,92.4,93.8,95.5,95.9,95.8,95.4,94.9],
+  fr:[89.0,101.6,100.5,101.1,101.5,105.0,108.8,110.2,112.3,113.0,113.2,113.0],
+  it:[123.0,141.4,134.0,127.9,123.9,125.3,127.7,129.0,129.4,128.2,127.7,127.1],
+  pt:[109.4,122.2,116.7,105.5,92.6,88.9,85.6,81.4,78.2,75.5,73.4,72.0],
+  es:[83.1,102.0,97.4,92.1,89.6,87.2,85.0,82.8,81.3,79.8,78.8,77.9],
+  de:[39.8,45.3,46.2,45.8,45.7,46.0,47.2,49.4,51.9,54.2,56.4,58.6],
+  ie:[47.7,48.4,41.1,37.1,36.8,31.3,26.3,22.4,22.6,22.7,23.1,23.5],
+  jp:[148.2,160.8,157.5,159.6,149.5,141.7,136.5,134.3,130.1,127.7,125.6,123.8],
+  gr:[null,null,null,null,null,null,null,null,null,null,null,null],
+};
+const DEV_ORDER=['us','gb','fr','de','it','pt','es','ie','jp','gr'];
+const DEV_ORDER_NET=['us','gb','fr','de','it','pt','es','ie','jp']; // Greece has no published net debt
+const DEV_LBL={us:'US',gb:'UK',fr:'France',de:'Germany',it:'Italy',pt:'Portugal',es:'Spain',ie:'Ireland',jp:'Japan',gr:'Greece'};
+
+/* --- Emerging by region (Table 1.2, Fiscal Monitor April 2026) --- */
+const HD_REG_G={
+  asia:[59.3,69.9,71.3,74.8,79.8,84.3,90.6,96.1,99.8,102.5,104.7,106.6],
+  eu:  [28.2,36.7,34.2,30.1,31.9,32.1,33.9,37.3,40.5,42.3,43.7,45.1],
+  lac: [67.4,76.5,70.7,68.2,73.9,70.5,74.2,73.2,74.1,74.2,74.5,74.5],
+  mena:[41.9,51.7,48.9,41.4,41.4,42.5,46.1,47.3,47.9,49.0,49.5,50.1],
+};
+const REG_ORDER=['asia','eu','lac','mena'];
+const REG_LBL={asia:'EM Asia',eu:'EM Europe',lac:'EM Latin America',mena:'MENA'};
+
+/* --- Latin America, Emerging Asia, Emerging Europe: by country (IMF DataMapper) --- */
+const HD_LAC_G={
+  ar:[89.8,103.8,81.0,84.3,154.6,84.7,80.3,70.4,68.1,63.0,59.3,55.4],
+  br:[87.1,96.0,88.9,83.9,84.0,87.0,93.3,96.5,100.0,102.3,104.1,105.5],
+  cl:[28.3,32.4,36.4,37.9,39.4,41.7,41.8,42.5,44.4,45.5,46.8,48.1],
+  co:[51.0,65.3,64.4,61.3,55.4,61.0,59.9,60.9,61.3,61.0,60.4,59.8],
+  mx:[51.9,58.5,56.7,53.8,52.8,59.1,61.8,62.7,63.1,63.1,63.3,63.4],
+  pe:[26.5,34.3,35.5,33.5,32.4,32.1,30.2,30.0,30.9,31.6,32.1,32.1],
+};
+const LAC_ORDER=['ar','br','cl','co','mx','pe'];
+const LAC_LBL={ar:'Argentina',br:'Brazil',cl:'Chile',co:'Colombia',mx:'Mexico',pe:'Peru'};
+
+const HD_ASIA_G={
+  cn:[59.8,70.1,72.1,77.3,84.1,90.4,99.2,106.9,112.5,116.7,120.3,123.8],
+  in:[76.7,90.6,85.7,84.6,85.0,84.8,84.1,83.4,82.5,81.7,80.6,79.5],
+  id:[30.6,39.7,41.1,40.1,39.6,40.2,41.0,41.5,41.8,42.0,42.1,42.2],
+  my:[57.1,67.7,69.2,65.5,69.7,69.8,70.7,69.5,68.7,67.8,66.9,66.1],
+  th:[41.1,49.4,58.4,60.5,62.2,62.9,64.7,66.8,67.8,68.6,69.1,69.5],
+};
+const ASIA_ORDER=['cn','in','id','my','th'];
+const ASIA_LBL={cn:'China',in:'India',id:'Indonesia',my:'Malaysia',th:'Thailand'};
+
+const HD_EU_G={
+  hu:[65.0,78.7,76.2,74.1,73.2,73.5,75.2,77.9,80.3,82.8,85.0,87.0],
+  pl:[45.2,56.6,53.0,48.8,49.5,55.1,58.8,65.7,69.6,71.6,73.9,75.8],
+  ru:[13.7,19.2,16.5,15.1,15.2,14.8,17.2,19.1,21.2,23.6,25.4,27.2],
+  za:[56.1,68.9,68.8,70.7,73.2,76.0,78.6,78.9,79.7,80.9,81.7,82.2],
+  tr:[31.2,38.3,38.9,29.4,28.2,23.6,23.5,25.5,26.9,27.3,27.4,28.0],
+};
+const EU_ORDER=['hu','pl','ru','za','tr'];
+const EU_LBL={hu:'Hungary',pl:'Poland',ru:'Russia',za:'South Africa',tr:'Türkiye'};
+
+let builtAgg=false,builtDev=false,builtEm=false;
+const HH=270,HPB=70; // taller charts + more bottom padding so rotated country/region labels don't get cut off
+function buildAgg(){
+  if(builtAgg)return;builtAgg=true;
+  rGroupedBars('ch0','wh0',['Advanced G-20','Emerging'],yearSeries({0:HD_AE_G._,1:HD_EM_G._},[0,1]),HH,HPB);
+  buildLegend('lgh0',HY.length);
+  rGroupedBars('ch1','wh1',['Advanced G-20'],yearSeries({0:HD_AE_N._},[0]),HH,HPB);
+  buildLegend('lgh1',HY.length);
+}
+function buildDev(){
+  if(builtDev)return;builtDev=true;
+  rGroupedBars('ch2','wh2',DEV_ORDER.map(k=>DEV_LBL[k]),yearSeries(HD_DEV_G,DEV_ORDER),HH,HPB);
+  buildLegend('lgh2',HY.length);
+  rGroupedBars('ch3','wh3',DEV_ORDER_NET.map(k=>DEV_LBL[k]),yearSeries(HD_DEV_N,DEV_ORDER_NET),HH,HPB);
+  buildLegend('lgh3',HY.length);
+}
+function buildEm(){
+  if(builtEm)return;builtEm=true;
+  rGroupedBars('ch4','wh4',REG_ORDER.map(k=>REG_LBL[k]),yearSeries(HD_REG_G,REG_ORDER),HH,HPB);
+  buildLegend('lgh4',HY.length);
+  rGroupedBars('ch5','wh5',LAC_ORDER.map(k=>LAC_LBL[k]),yearSeries(HD_LAC_G,LAC_ORDER),HH,HPB);
+  buildLegend('lgh5',HY.length);
+  rGroupedBars('ch6','wh6',ASIA_ORDER.map(k=>ASIA_LBL[k]),yearSeries(HD_ASIA_G,ASIA_ORDER),HH,HPB);
+  buildLegend('lgh6',HY.length);
+  rGroupedBars('ch7','wh7',EU_ORDER.map(k=>EU_LBL[k]),yearSeries(HD_EU_G,EU_ORDER),HH,HPB);
+  buildLegend('lgh7',HY.length);
+}
+function buildDesglose(){buildAgg();}
+function sd(view,btn){
+  document.querySelectorAll('.hgroup').forEach(g=>g.classList.remove('active'));
+  document.querySelectorAll('.hsb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('hg-'+view).classList.add('active');
+  btn.classList.add('active');
+  if(view==='dev')setTimeout(buildDev,30);
+  if(view==='em')setTimeout(buildEm,30);
+}
+
+
+</script>
+</body>
+</html>
