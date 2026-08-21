@@ -21,9 +21,11 @@
 
 .w{font-family:'Aller',sans-serif;font-weight:300;padding:1.5rem 1rem 2rem;max-width:700px;color:#000;margin:0 auto}
 
-.wh{margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between}
+.wh{margin-bottom:1.25rem;display:flex;align-items:flex-start;justify-content:space-between}
 .wh h2{font-size:20px;font-weight:700;color:var(--g);letter-spacing:-.01em}
-.pub-badge{font-size:10px;font-weight:700;letter-spacing:.08em;color:#1a9fcc;text-transform:uppercase;white-space:nowrap}
+.pub-badge{font-size:10px;font-weight:700;letter-spacing:.08em;color:#1a9fcc;text-transform:uppercase;white-space:nowrap;display:block;text-align:right}
+.pub-meta{text-align:right;margin-top:3px}
+.pub-meta div{font-size:10px;color:var(--sl);font-weight:300;white-space:nowrap;line-height:1.5}
 
 .tabs{display:flex;gap:5px;margin-bottom:1.25rem;padding-bottom:1.1rem;border-bottom:1px solid var(--gr4);flex-wrap:wrap;align-items:center}
 .tb,.tbg{padding:6px 14px;font-size:12px;border-radius:4px;cursor:pointer;transition:all .15s;border:none}
@@ -132,13 +134,13 @@
 
 .cs{background:#fff;border:1px solid var(--gr4);border-radius:6px;padding:13px 15px;margin-bottom:8px}
 .ct{font-size:10px;font-weight:700;color:#000;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--gr4)}
-.cw{width:100%;position:relative;cursor:crosshair}
+.cw{width:100%;position:relative;cursor:crosshair;margin-bottom:6px}
 .cw canvas{display:block}
 .cl{display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;justify-content:center}
 .li{display:flex;align-items:center;gap:5px;font-size:11px;color:#000;font-weight:300}
 .ll{width:16px;height:2px;border-radius:1px;flex-shrink:0}
 .lb{width:11px;height:11px;border-radius:2px;flex-shrink:0}
-.cnote{font-size:10px;color:var(--sl);margin-top:5px;font-style:italic;font-weight:300}
+.cnote{font-size:10px;color:var(--sl);margin-top:12px;font-style:italic;font-weight:300;line-height:1.4}
 
 </style>
 
@@ -148,7 +150,13 @@
   <!-- ====================== HEADER ====================== -->
   <div class="wh">
     <h2>Fiscal Monitor Tracker</h2>
-    <span class="pub-badge">PUBLIC INFORMATION</span>
+    <div>
+      <span class="pub-badge">PUBLIC INFORMATION</span>
+      <div class="pub-meta">
+        <div>Update frequency: IMF Fiscal Monitor edition (April / October)</div>
+        <div>Last updated: April 15, 2026</div>
+      </div>
+    </div>
   </div>
 
   <!-- ====================== TABS ======================
@@ -325,7 +333,7 @@
       </div>
     </div>
 
-    <div class="cnote">Source: IMF, IMF DataMapper (indicator GGXWDG_NGDP, WEO/Fiscal Monitor April 2026) and Fiscal Monitor, April 2026, Table 1.2 and Tables A7/A8 of the Methodological and Statistical Appendix. Series without published net debt at the individual emerging-market country, region, or Greece level are left out of the corresponding charts rather than estimated.</div>
+    <div class="cnote" style="margin-top:16px">Source: IMF, IMF DataMapper (indicator GGXWDG_NGDP, WEO/Fiscal Monitor April 2026) and Fiscal Monitor, April 2026, Table 1.2 and Tables A7/A8 of the Methodological and Statistical Appendix. Series without published net debt at the individual emerging-market country, region, or Greece level are left out of the corresponding charts rather than estimated.</div>
   </div>
 
 </div>
