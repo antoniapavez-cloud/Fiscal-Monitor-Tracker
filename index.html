@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Fiscal Monitor Tracker — IMF</title>
 </head>
-<body style="background:#f5f5f5;min-height:100vh;display:flex;justify-content:center;padding:2rem 1rem;zoom:1.1">
-<div style="max-width:740px;width:100%;background:#fff;border-radius:10px;padding:2rem 1.5rem 2.5rem;box-shadow:0 1px 4px rgba(0,0,0,.08)">
+<body style="background:#f5f5f5;min-height:100vh;display:flex;justify-content:center;padding:2rem 1rem 6rem">
+<div style="max-width:740px;width:100%;background:#fff;border-radius:10px;padding:2rem 1.5rem 2.5rem;box-shadow:0 1px 4px rgba(0,0,0,.08);transform:scale(1.1);transform-origin:top center">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Aller:ital,wght@0,300;0,700;1,300&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Aller',sans-serif!important}
@@ -154,6 +154,7 @@
       <span class="wh-tag">INFORMACIÓN PÚBLICA</span>
       <span class="wh-sub">Periodicidad: Semestral</span>
       <span class="wh-sub">Última actualización: 15 de abril de 2026</span>
+      <span class="wh-sub">Source: IMF</span>
     </div>
   </div>
 
@@ -169,14 +170,6 @@
 
   <!-- ====================== PANEL A — GLOBAL SUMMARY ====================== -->
   <div class="mp active" id="panel-panelA">
-
-    <div class="cnote" style="margin-top:0;margin-bottom:16px">Source: IMF, data as of April 2026</div>
-    <div class="strip" style="grid-template-columns:repeat(4,1fr)">
-      <div class="mc-sm"><div class="ml">World Debt 2031 (proj.)</div><div class="mv">102.3%</div><div class="ms"><span class="bh">↑ Rising</span></div></div>
-      <div class="mc-sm"><div class="ml">World Debt 2025</div><div class="mv">93.9%</div><div class="ms">of GDP, gen. gov. gross</div></div>
-      <div class="mc-sm"><div class="ml">World Deficit 2025</div><div class="mv" style="color:var(--c)">−5.0%</div><div class="ms">of GDP; almost unchanged vs. 2024</div></div>
-      <div class="mc-sm"><div class="ml">Debt-at-Risk 2028</div><div class="mv">117.2%</div><div class="ms">95th percentile, 3-year horizon</div></div>
-    </div>
 
     <div class="exec">
       <div class="exec-t">Executive Summary</div>
@@ -361,6 +354,7 @@ function sp(id,btn){
 }
 
 const BLU='#5D7082',GRN='#7BC143',CRL='#E07F5C',GR4='#E6E6E6';
+function effZoom(el){const r=el.getBoundingClientRect().width,o=el.offsetWidth||r;return o?r/o:1;} // actual browser zoom factor (self-correcting; 1 if zoom unsupported)
 const F="'Aller',sans-serif";
 
 function autoAx(data){
@@ -377,7 +371,7 @@ function autoAx(data){
 function rLine(cid,wid,datasets,tv,tl,lbl,xi,fixedMax){
   const cv=document.getElementById(cid),wr=document.getElementById(wid);
   if(!cv||!wr)return;
-  const DPR=window.devicePixelRatio||1,W=wr.offsetWidth,H=240;
+  const DPR=Math.max(2,(window.devicePixelRatio||1)*effZoom(wr)),W=wr.offsetWidth,H=240;
   cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';
   const ctx=cv.getContext('2d');ctx.scale(DPR,DPR);
   const PL=30,PR=8,PT=8,PB=48,cW=W-PL-PR,cH=H-PT-PB,n=datasets[0].d.length;
@@ -388,8 +382,8 @@ function rLine(cid,wid,datasets,tv,tl,lbl,xi,fixedMax){
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
   ax.tks.forEach(v=>{const y=yp(v),iz=Math.abs(v)<1e-4;ctx.strokeStyle=iz?'rgba(0,0,0,0.15)':GR4;ctx.lineWidth=iz?1:0.5;ctx.beginPath();ctx.moveTo(PL,y);ctx.lineTo(PL+cW,y);ctx.stroke();ctx.fillStyle='#000';ctx.font='10px '+F;ctx.textAlign='right';ctx.fillText(v%1===0?v.toFixed(0):v.toFixed(1),PL-3,y+3);});
   if(tv!=null){const yt=yp(tv);ctx.strokeStyle=CRL;ctx.lineWidth=1.2;ctx.setLineDash([5,3]);ctx.beginPath();ctx.moveTo(PL,yt);ctx.lineTo(PL+cW,yt);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=CRL;ctx.font='bold 10px '+F;ctx.textAlign='right';ctx.fillText(tl,PL+cW-2,yt-4);}
-  ctx.fillStyle='#000';ctx.font='bold 10px '+F;ctx.textAlign='center';
-  xi.forEach((idx)=>{if(idx>=n)return;ctx.fillText(lbl[idx]?lbl[idx].split(' ').pop():'',xp(idx),H-PB+16);});
+  ctx.fillStyle='#000';ctx.font='10px '+F;ctx.textAlign='right';
+  xi.forEach((idx)=>{if(idx>=n)return;ctx.save();ctx.translate(xp(idx),H-PB+16);ctx.rotate(-Math.PI/6);ctx.fillText(lbl[idx]?lbl[idx].split(' ').pop():'',0,0);ctx.restore();});
   datasets.forEach(ds=>{ctx.strokeStyle=ds.c;ctx.lineWidth=ds.w||2;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();ds.d.forEach((v,i)=>i===0?ctx.moveTo(xp(i),yp(v)):ctx.lineTo(xp(i),yp(v)));ctx.stroke();ctx.fillStyle=ds.c;ctx.beginPath();ctx.arc(xp(n-1),yp(ds.d[n-1]),3,0,Math.PI*2);ctx.fill();});
   cv.onmousemove=e=>{
     const r=cv.getBoundingClientRect(),mx=e.clientX-r.left;
@@ -405,7 +399,7 @@ function rLine(cid,wid,datasets,tv,tl,lbl,xi,fixedMax){
 function rBars(cid,wid,data,clip,lbl_title,xLabels,xi){
   const cv=document.getElementById(cid),wr=document.getElementById(wid);
   if(!cv||!wr)return;
-  const DPR=window.devicePixelRatio||1,W=wr.offsetWidth,H=260;
+  const DPR=Math.max(2,(window.devicePixelRatio||1)*effZoom(wr)),W=wr.offsetWidth,H=260;
   cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';
   const ctx=cv.getContext('2d');ctx.scale(DPR,DPR);
   const PL=30,PR=8,PT=8,PB=70,cW=W-PL-PR,cH=H-PT-PB,n=data.length;
@@ -438,7 +432,7 @@ function rGroupedBars(cid,wid,categories,series,H,PB,rotate){
   const cv=document.getElementById(cid),wr=document.getElementById(wid);
   if(!cv||!wr)return;
   H=H||210;PB=PB||48;rotate=(rotate===undefined)?true:rotate;
-  const DPR=window.devicePixelRatio||1,W=wr.offsetWidth;
+  const DPR=Math.max(2,(window.devicePixelRatio||1)*effZoom(wr)),W=wr.offsetWidth;
   cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';
   const ctx=cv.getContext('2d');ctx.scale(DPR,DPR);
   const PL=30,PR=8,PT=8,cW=W-PL-PR,cH=H-PT-PB,n=categories.length,ns=series.length;
@@ -512,11 +506,11 @@ function buildCharts(){
   rGroupedBars('c3','w3',YR_LBL,[
     {lbl:'Advanced',c:'#5D7082',d:pick(DEBT_AE)},
     {lbl:'Emerging',c:GRN,d:pick(DEBT_EM)},
-  ],250,40,false);
+  ],250,48,true);
   rGroupedBars('c4','w4',YR_LBL,[
     {lbl:'Advanced',c:'#5D7082',d:pick(NET_AE)},
     {lbl:'Emerging',c:GRN,d:pick(NET_EM)},
-  ],250,40,false);
+  ],250,48,true);
 }
 
 /* ============================================================
