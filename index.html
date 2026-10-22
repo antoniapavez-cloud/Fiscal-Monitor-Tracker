@@ -28,6 +28,7 @@
 
 .wh{margin-bottom:1.25rem;display:flex;align-items:flex-start;justify-content:space-between}
 .wh h2{font-size:20px;font-weight:700;color:var(--g);letter-spacing:-.01em;line-height:1}
+.wh-org{margin-top:7px;font-size:12px;font-weight:300;line-height:1.2;color:var(--sl)}
 .wh-meta{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
 .wh-tag{font-size:10px;font-weight:700;letter-spacing:.08em;color:#1A9FCC;text-transform:uppercase;line-height:1;white-space:nowrap}
 .wh-sub{font-size:10px;font-weight:300;color:#969696;line-height:1.3;white-space:nowrap}
@@ -162,7 +163,7 @@
 .dk-ct{position:absolute;height:19.39px;line-height:19.39px;font-size:10.67px;font-weight:700;text-align:center;color:#1B2025;white-space:nowrap}
 .dk-gl{position:absolute;height:.7px;background:#D8DEE3}
 .dk-yl{position:absolute;width:30px;text-align:right;font-size:6.4px;line-height:8px;font-weight:700;color:#1B2025}
-.dk-xl{position:absolute;text-align:center;font-size:6.4px;line-height:8px;font-weight:700;color:#1B2025}
+.dk-xr{position:absolute;text-align:right;font-size:6.4px;line-height:8px;font-weight:700;color:#1B2025;white-space:nowrap!important;transform-origin:100% 0;transform:rotate(-45deg)}
 .dk-bar{position:absolute}
 .dk-lgq{position:absolute;width:3.5px;height:3.7px}
 .dk-lgt{position:absolute;font-size:6.5px;line-height:8px;font-weight:700;color:#1B2025;white-space:nowrap}
@@ -181,6 +182,10 @@
 .dk-sum .ri{display:block;position:relative;padding-left:16px}
 .dk-sum .rt{position:absolute;left:0;top:3px}
 .dk-sum .exec li,.dk-sum .qb,.dk-sum .qa{display:block}
+.dk-sum .exec li{font-size:10.17px}
+.dk-sum .ri{font-size:10.67px}
+.dk-sum .qb{font-size:10.67px}
+.dk-sum .qa{font-size:9.67px}
 
 .tooltip{position:fixed;background:#1B2127;color:#fff;font-size:11px;font-weight:300;padding:5px 9px;border-radius:4px;pointer-events:none;display:none;z-index:9999;white-space:nowrap;line-height:1.6}
 
@@ -216,7 +221,10 @@
 
   <!-- ====================== HEADER ====================== -->
   <div class="wh">
-    <h2>Fiscal Monitor Tracker</h2>
+    <div>
+      <h2>Fiscal Monitor Tracker</h2>
+      <div class="wh-org">International Monetary Fund (IMF)</div>
+    </div>
     <div class="wh-meta">
       <span class="wh-tag">INFORMACIÓN PÚBLICA</span>
       <span class="wh-sub">Periodicidad: Semestral</span>
@@ -288,12 +296,12 @@
   <!-- ====================== PANEL CHARTS ====================== -->
   <div class="mp" id="panel-charts">
     <div class="cs">
-      <div class="ct">Gross debt by group (% of GDP, 2019–2031)</div>
+      <div class="ct">Gross debt (% of GDP, 2019–2031)</div>
       <div class="cw" id="w0"><canvas id="c0"></canvas></div>
       <div class="cl">
-        <span class="li"><span class="ll" style="background:#7BC143"></span>World</span>
+        <span class="li"><span class="ll" style="background:#85B65E"></span>World</span>
         <span class="li"><span class="ll" style="background:#5D7082"></span>Advanced</span>
-        <span class="li"><span class="ll" style="background:#B3D88C"></span>Emerging</span>
+        <span class="li"><span class="ll" style="background:#B8D29D"></span>Emerging</span>
         <span class="li"><span class="ll" style="background:#E07F5C"></span>Low-income</span>
       </div>
       <div class="cnote">Dashed line: 100% of GDP threshold, reached in 2029 under the reference projection. Source: Tables A7/A15/A21, IMF, April 2026.</div>
@@ -303,18 +311,12 @@
       <div class="ct">Overall fiscal balance (% of GDP, 2019–2031)</div>
       <div class="cw" id="w1"><canvas id="c1"></canvas></div>
       <div class="cl">
-        <span class="li"><span class="ll" style="background:#7BC143"></span>World</span>
+        <span class="li"><span class="ll" style="background:#85B65E"></span>World</span>
         <span class="li"><span class="ll" style="background:#5D7082"></span>Advanced</span>
-        <span class="li"><span class="ll" style="background:#B3D88C"></span>Emerging</span>
+        <span class="li"><span class="ll" style="background:#B8D29D"></span>Emerging</span>
         <span class="li"><span class="ll" style="background:#E07F5C"></span>Low-income</span>
       </div>
       <div class="cnote">Source: Tables A1/A9/A17, IMF, April 2026.</div>
-    </div>
-
-    <div class="cs">
-      <div class="ct">Change in debt 2025 → 2031 by country (points of GDP)</div>
-      <div class="cw" id="w2"><canvas id="c2"></canvas></div>
-      <div class="cnote">Coral: projected debt rises. Green: falls. Out-of-range values are annotated separately.</div>
     </div>
 
     <div class="cs">
@@ -322,7 +324,7 @@
       <div class="cw" id="w3"><canvas id="c3"></canvas></div>
       <div class="cl">
         <span class="li"><span class="lb" style="background:#5D7082"></span>Advanced</span>
-        <span class="li"><span class="lb" style="background:#7BC143"></span>Emerging</span>
+        <span class="li"><span class="lb" style="background:#85B65E"></span>Emerging</span>
       </div>
       <div class="cnote">Source: Table 1.2, IMF Fiscal Monitor, April 2026.</div>
     </div>
@@ -332,7 +334,7 @@
       <div class="cw" id="w4"><canvas id="c4"></canvas></div>
       <div class="cl">
         <span class="li"><span class="lb" style="background:#5D7082"></span>Advanced</span>
-        <span class="li"><span class="lb" style="background:#7BC143"></span>Emerging</span>
+        <span class="li"><span class="lb" style="background:#85B65E"></span>Emerging</span>
       </div>
       <div class="cnote">Net debt = gross debt minus financial assets. Source: Tables A8/A16, IMF, April 2026. The emerging-market average excludes countries without published net debt data (e.g., China, India).</div>
     </div>
@@ -429,7 +431,7 @@ function sp(id,btn){
   if(id==='desglose')setTimeout(buildDesglose,60);
 }
 
-const BLU='#5D7082',GRN='#7BC143',CRL='#E07F5C',GR4='#E6E6E6';
+const BLU='#5D7082',GRN='#85B65E',CRL='#E07F5C',GR4='#E6E6E6';
 function effZoom(el){const r=el.getBoundingClientRect().width,o=el.offsetWidth||r;return o?r/o:1;} // actual browser zoom factor (self-correcting; 1 if zoom unsupported)
 const F="'Aller',sans-serif";
 
@@ -468,35 +470,6 @@ function rLine(cid,wid,datasets,tv,tl,lbl,xi,fixedMax){
     for(let i=0;i<n;i++){const d=Math.abs(xp(i)-mx);if(d<md){md=d;ci=i;}}
     const lines=datasets.map(ds=>'<span style="color:'+ds.c+'">&#9679;</span> '+ds.lbl+': <b>'+ds.d[ci].toFixed(1)+'%</b>').join('<br>');
     showT(e,'<span style="opacity:.65">'+(lbl[ci]||'')+'</span><br>'+lines);
-  };
-  cv.onmouseleave=hideT;
-}
-
-function rBars(cid,wid,data,clip,lbl_title,xLabels,xi){
-  const cv=document.getElementById(cid),wr=document.getElementById(wid);
-  if(!cv||!wr)return;
-  const DPR=Math.max(2,(window.devicePixelRatio||1)*effZoom(wr)),W=wr.offsetWidth,H=260;
-  cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';
-  const ctx=cv.getContext('2d');ctx.scale(DPR,DPR);
-  const PL=30,PR=8,PT=8,PB=70,cW=W-PL-PR,cH=H-PT-PB,n=data.length;
-  const yMin=-clip,yMax=clip,yr=yMax-yMin,bW=(cW/n)*0.7;
-  const xp=i=>PL+(i/n)*cW+(cW/n)*0.15,yp=v=>PT+cH-((v-yMin)/yr)*cH,y0=yp(0);
-  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
-  for(let v=-clip;v<=clip;v+=Math.max(1,Math.round(clip/4))){const y=yp(v),iz=v===0;ctx.strokeStyle=iz?'rgba(0,0,0,0.15)':GR4;ctx.lineWidth=iz?1:0.5;ctx.beginPath();ctx.moveTo(PL,y);ctx.lineTo(PL+cW,y);ctx.stroke();ctx.fillStyle='#000';ctx.font='10px '+F;ctx.textAlign='right';ctx.fillText(v,PL-3,y+3);}
-  data.forEach((v,i)=>{
-    const cl=Math.max(-clip,Math.min(clip,v)),ip=v>=0,bH=Math.abs(yp(cl)-y0),bY=ip?y0-bH:y0;
-    ctx.fillStyle=ip?CRL:GRN;ctx.fillRect(xp(i),bY,bW,bH);
-    if(Math.abs(v)>clip){ctx.fillStyle=ip?CRL:GRN;ctx.font='bold 8px '+F;ctx.textAlign='center';ctx.fillText((v>0?'+':'')+v.toFixed(1),xp(i)+bW/2,ip?bY-3:bY+bH+9);}
-  });
-  ctx.fillStyle='#000';ctx.font='10px '+F;ctx.textAlign='right';
-  if(xi&&xLabels)xi.forEach(idx=>{if(idx>=n)return;ctx.save();ctx.translate(xp(idx)+bW/2,H-PB+16);ctx.rotate(-Math.PI/4);ctx.fillText(xLabels[idx],0,0);ctx.restore();});
-  cv.onmousemove=e=>{
-    const r=cv.getBoundingClientRect(),mx=e.clientX-r.left;
-    if(mx<PL||mx>PL+cW){hideT();return;}
-    let ci=0,md=Infinity;
-    for(let i=0;i<n;i++){const cx=xp(i)+bW/2,d=Math.abs(cx-mx);if(d<md){md=d;ci=i;}}
-    const v=data[ci];
-    showT(e,'<span style="opacity:.65">'+(xLabels?xLabels[ci]:'')+'</span><br><span style="color:'+(v>=0?CRL:GRN)+'">&#9679;</span> '+lbl_title+': <b>'+(v>0?'+':'')+v.toFixed(1)+'pp</b>'+(Math.abs(v)>clip?' <span style="opacity:.6">(clipped)</span>':''));
   };
   cv.onmouseleave=hideT;
 }
@@ -560,33 +533,25 @@ const BAL_LIDC =[-3.7,-5.0,-4.2,-4.2,-3.8,-3.0,-2.8,-3.5,-3.2,-3.2,-3.1,-3.1,-3.
 
 const NET_AE=[73.2,84.9,82.0,79.0,79.3,79.3,79.7,80.1,81.5,83.1,84.7,86.3,87.8];
 const NET_EM=[37.7,45.2,44.3,41.7,41.9,43.3,45.3,48.1,49.7,50.7,51.6,52.2,52.6];
-const YR_IDX=[0,2,4,6,8,10,12]; // 2019,2021,2023,2025,2027,2029,2031
-const YR_LBL=YR_IDX.map(i=>YEARS[i]);
-const pick=(arr)=>YR_IDX.map(i=>arr[i]);
 
-const CH_NAMES=['US','China','Japan','Germany','France','UK','Italy','Canada','India','Brazil','Russia','South Africa','Saudi Arabia','Nigeria','Kenya'];
-const CH_DELTA=[18.2,27.6,-13.7,10.8,4.7,0.3,-1.0,-10.0,-6.4,13.2,11.9,4.0,10.5,-5.4,5.8];
 let built=false;
 function buildCharts(){
   if(built)return;built=true;
   rLine('c0','w0',
-    [{d:DEBT_WORLD,c:GRN,w:2.4,lbl:'World'},{d:DEBT_AE,c:BLU,w:2,lbl:'Advanced'},{d:DEBT_EM,c:'#B3D88C',w:2,lbl:'Emerging'},{d:DEBT_LIDC,c:CRL,w:2,lbl:'Low-income'}],
-    100,'100% of GDP',YEARS,[0,3,6,9,12],null
+    [{d:DEBT_WORLD,c:GRN,w:2.4,lbl:'World'},{d:DEBT_AE,c:BLU,w:2,lbl:'Advanced'},{d:DEBT_EM,c:'#B8D29D',w:2,lbl:'Emerging'},{d:DEBT_LIDC,c:CRL,w:2,lbl:'Low-income'}],
+    100,'100% of GDP',YEARS,[0,1,2,3,4,5,6,7,8,9,10,11,12],null
   );
   rLine('c1','w1',
-    [{d:BAL_WORLD,c:GRN,w:2.4,lbl:'World'},{d:BAL_AE,c:BLU,w:2,lbl:'Advanced'},{d:BAL_EM,c:'#B3D88C',w:2,lbl:'Emerging'},{d:BAL_LIDC,c:CRL,w:2,lbl:'Low-income'}],
-    null,null,YEARS,[0,3,6,9,12],null
+    [{d:BAL_WORLD,c:GRN,w:2.4,lbl:'World'},{d:BAL_AE,c:BLU,w:2,lbl:'Advanced'},{d:BAL_EM,c:'#B8D29D',w:2,lbl:'Emerging'},{d:BAL_LIDC,c:CRL,w:2,lbl:'Low-income'}],
+    null,null,YEARS,[0,1,2,3,4,5,6,7,8,9,10,11,12],null
   );
-  const cNames=CH_NAMES,cDelta=CH_DELTA;
-  rBars('c2','w2',cDelta,20,'Debt change 2025→2031',cNames,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]);
-
-  rGroupedBars('c3','w3',YR_LBL,[
-    {lbl:'Advanced',c:'#5D7082',d:pick(DEBT_AE)},
-    {lbl:'Emerging',c:GRN,d:pick(DEBT_EM)},
+  rGroupedBars('c3','w3',YEARS,[
+    {lbl:'Advanced',c:'#5D7082',d:DEBT_AE},
+    {lbl:'Emerging',c:GRN,d:DEBT_EM},
   ],250,48,true);
-  rGroupedBars('c4','w4',YR_LBL,[
-    {lbl:'Advanced',c:'#5D7082',d:pick(NET_AE)},
-    {lbl:'Emerging',c:GRN,d:pick(NET_EM)},
+  rGroupedBars('c4','w4',YEARS,[
+    {lbl:'Advanced',c:'#5D7082',d:NET_AE},
+    {lbl:'Emerging',c:GRN,d:NET_EM},
   ],250,48,true);
 }
 
@@ -598,31 +563,23 @@ function buildCharts(){
    ============================================================ */
 const HY=['2019','2020','2021','2022','2023','2024','2025','2026e','2027e','2028e','2029e','2030e'];
 
-/* MFO brand green gradient: from a dark green to --g4 (#E1F1D3),
-   passing through a mid-tone green, --g (#7BC143) and --g2 (#B3D88C). */
-const MFO_GREEN_STOPS=[[31,77,18],[61,110,26],[123,193,67],[179,216,140],[225,241,211]];
-function greenGrad(i,n){
-  const t=n<=1?0:i/(n-1);
-  const seg=1/(MFO_GREEN_STOPS.length-1);
-  let k=Math.min(MFO_GREEN_STOPS.length-2,Math.floor(t/seg));
-  const lt=(t-k*seg)/seg,c1=MFO_GREEN_STOPS[k],c2=MFO_GREEN_STOPS[k+1];
-  const r=Math.round(c1[0]+(c2[0]-c1[0])*lt),g=Math.round(c1[1]+(c2[1]-c1[1])*lt),b=Math.round(c1[2]+(c2[2]-c1[2])*lt);
-  return 'rgb('+r+','+g+','+b+')';
-}
+/* Colores por año tomados de la leyenda del PPT/PDF "MFO Monitor Fiscal" (2017 … 2030e).
+   Los usan los gráficos de Debt History y el PDF exportado. */
+const YEAR_COLORS={'2017':'#4F7E29','2018':'#578A2E','2019':'#5F9733','2020':'#66A137','2021':'#6CAB3A','2022':'#87C14A','2023':'#91CB61','2024':'#75B840','2025':'#D0E4A6','2026e':'#C1DC8C','2027e':'#B0D26C','2028e':'#92D050','2029e':'#7BC143','2030e':'#75B840'};
+const yearColor=y=>YEAR_COLORS[y]||'#7BC143';
 /* obj: {key:[12 values by year]}, order: array of keys in the desired order (= X-axis categories) */
 function yearSeries(obj,order){
   return HY.map((y,yi)=>({
     lbl:y,
-    c:greenGrad(yi,HY.length),
+    c:yearColor(HY[yi]),
     d:order.map(k=>{const arr=obj[k];const v=arr?arr[yi]:null;return (v==null)?null:v;})
   }));
 }
 function buildLegend(elId,n){
   const el=document.getElementById(elId);if(!el)return;
   let html='<div class="cl" style="margin-top:2px;font-style:normal">';
-  const step=Math.max(1,Math.round(n/6));
-  for(let i=0;i<n;i+=step){html+='<span class="li" style="font-weight:700;font-style:normal"><span class="lb" style="background:'+greenGrad(i,n)+'"></span>'+HY[i]+'</span>';}
-  html+='<span class="li" style="font-weight:700;font-style:normal"><span class="lb" style="background:'+greenGrad(n-1,n)+'"></span>'+HY[n-1]+'</span></div>';
+  for(let i=0;i<n;i++){html+='<span class="li" style="font-weight:700;font-style:normal"><span class="lb" style="background:'+yearColor(HY[i])+'"></span>'+HY[i]+'</span>';}   // año a año
+  html+='</div>';
   el.innerHTML=html;
 }
 
@@ -789,13 +746,13 @@ const PDF_COVER_LOGO='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEA3ADcAAD/2wBDAAI
 const PDF_FONTS=['300 16px Aller','italic 300 16px Aller','400 16px Aller','italic 400 16px Aller','700 16px Aller','italic 700 16px Aller'];
 const ES_MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 /* colores por año tomados de la leyenda del PPT (2017 … 2030e) */
-const DK_YEAR_COLORS={'2017':'#4F7E29','2018':'#578A2E','2019':'#5F9733','2020':'#66A137','2021':'#6CAB3A','2022':'#87C14A','2023':'#91CB61','2024':'#75B840','2025':'#D0E4A6','2026e':'#C1DC8C','2027e':'#B0D26C','2028e':'#92D050','2029e':'#7BC143','2030e':'#75B840'};
+const DK_YEAR_COLORS=YEAR_COLORS;   // misma paleta que Debt History
 /* geometría de cada gráfico del PPT (px): área de trazado (pl,pr), línea superior (pt) y base (pb), leyenda (lx, ly0..ly1) y caja del título */
 const DK_GEO={
   s3L:{pl:112.5,pr:421.75,pt:194.0,pb:349.0,lx:435.25,ly0:201.0,ly1:352.25,t:{x:201.3,y:169.11,w:158.76}},
-  s3R:{pl:516.0,pr:828.0,pt:189.5,pb:345.75,lx:847.0,ly0:199.75,ly1:352.25,t:{x:615.94,y:169.01,w:158.76}},
+  s3R:{pl:516.0,pr:828.0,pt:194.0,pb:349.0,lx:847.0,ly0:201.0,ly1:352.25,t:{x:615.94,y:169.11,w:158.76}},
   s4L:{pl:110.75,pr:423.5,pt:193.25,pb:348.12,lx:432.0,ly0:200.5,ly1:352.75,t:{x:201.3,y:169.11,w:158.76}},
-  s4R:{pl:518.0,pr:828.75,pt:192.75,pb:348.12,lx:841.5,ly0:200.0,ly1:352.75,t:{x:615.94,y:169.01,w:158.76}},
+  s4R:{pl:518.0,pr:828.75,pt:193.25,pb:348.12,lx:841.5,ly0:200.5,ly1:352.75,t:{x:615.94,y:169.11,w:158.76}},
   s5:{pl:107.25,pr:421.0,pt:193.75,pb:346.5,lx:427.25,ly0:200.75,ly1:352.5,t:{x:201.3,y:169.11,w:158.76}},
   s6:{pl:107.25,pr:421.25,pt:195.25,pb:348.0,lx:427.5,ly0:202.25,ly1:354.25,t:{x:201.3,y:169.11,w:158.76}},
   s7:{pl:107.25,pr:422.75,pt:194.12,pb:345.88,lx:430.0,ly0:201.25,ly1:352.5,t:{x:201.3,y:169.11,w:158.76}},
@@ -825,7 +782,8 @@ function pdfDateInfo(){
   const el=document.getElementById('lastUpdate');
   const [y,m,d]=el.dataset.date.split('-').map(Number);
   return{
-    ed:ES_MONTHS[m-1]+' '+y,                                                        // "Abril 2026"
+    ed:ES_MONTHS[m-1]+' '+y,                                                        // "Abril 2026" (portada)
+    edLow:ES_MONTHS[m-1].toLowerCase()+' '+y,                                       // "abril 2026" (pies de fuente)
     stamp:String(y).slice(2)+String(m).padStart(2,'0')+String(d).padStart(2,'0')   // AAMMDD
   };
 }
@@ -881,7 +839,7 @@ function dkChart(slide,g,o){
   const slots=Math.max(n,2);                       // con 1 sola categoría queda en su posición, no se estira
   const pitch=pw/slots,grp=pitch*(slots<=3?0.897:0.88),period=grp/ny,gap=Math.min(2.1,period*0.2),off=(pitch-grp)/2;
   rows.forEach((r,ci)=>{
-    add(dkEl('dk-xl','left:'+(pl+ci*pitch)+'px;top:'+(pb+3.3)+'px;width:'+pitch+'px',r.label));
+    dkXRot(slide,pl+ci*pitch+pitch/2,pb+3.4,r.label);
     r.vals.forEach((v,yi)=>{
       if(v==null)return;
       const h=ph*v/top,x=pl+ci*pitch+off+yi*period;
@@ -899,7 +857,7 @@ function dkChart(slide,g,o){
 /* Láminas de gráficos: mismas agrupaciones y títulos que el PPT, con los datos del tracker (HD_*) */
 function dkChartSlides(info,startNum){
   const mk=(obj,order,lbl)=>order.map(k=>({label:lbl?lbl[k]:k,vals:obj[k]}));
-  const base='Fuente: '+PDF_META.srcName+', '+info.ed;
+  const base='Fuente: '+PDF_META.srcName+', '+info.edLow;
   const G='Deuda Bruta % PIB',N='Deuda Neta % PIB';
   const defs=[
     {sub:'Economías Desarrolladas vs. Emergentes',foot:base+'.*Deuda bruta: todas las obligaciones que requieren un pago futuro de capital o de interés de parte del deudor al acreedor. Deuda neta: deuda bruta menos activos financieros del país.',geo:[DK_GEO.s3L,DK_GEO.s3R],
@@ -930,7 +888,7 @@ function dkSummarySlides(info,root,startNum){
   const clones=pdfSections().map(n=>{const c=n.cloneNode(true);c.removeAttribute('id');c.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));holder.appendChild(c);return c;});
   const k=holder.getBoundingClientRect().width/COLW||1;
   const items=clones.map(c=>({el:c,h:c.getBoundingClientRect().height/k,mb:(parseFloat(getComputedStyle(c).marginBottom)||0)/k}));
-  const base='Fuente: '+PDF_META.srcName+', '+info.ed;
+  const base='Fuente: '+PDF_META.srcName+', '+info.edLow;
   const slides=[];let cur=null,col=0,y=TOP;
   const newSlide=()=>{const s=dkContent(startNum+slides.length,slides.length?'Resumen Ejecutivo (continuación)':'Resumen Ejecutivo',base);slides.push(s);col=0;y=TOP;cur=s;};
   const colEl=()=>{const c=dkEl('dk-sum','position:absolute;left:'+COLX[col]+'px;top:'+TOP+'px;width:'+COLW+'px');cur.appendChild(c);return c;};
@@ -946,6 +904,7 @@ function dkSummarySlides(info,root,startNum){
 
 
 /* ---- Gráficos de la pestaña Charts, con el estilo de los gráficos del PPT ---- */
+function dkXRot(slide,cx,top,text){slide.appendChild(dkEl('dk-xr','left:'+(cx-70)+'px;top:'+top+'px;width:70px',text));}
 function dkTitle(slide,g,text,wide){
   const w=wide||300,cx=g.t.x+g.t.w/2;
   slide.appendChild(dkEl('dk-ct','left:'+(cx-w/2)+'px;top:'+g.t.y+'px;width:'+w+'px',text));
@@ -971,7 +930,7 @@ function dkLine(slide,g,o){
   const add=el=>{slide.appendChild(el);return el;};
   dkTitle(slide,g,o.title);
   ax.tks.forEach(v=>{const y=yp(v);add(dkEl('dk-gl','left:'+pl+'px;top:'+(y-.35)+'px;width:'+pw+'px'));add(dkEl('dk-yl','left:'+(pl-36.7)+'px;top:'+(y-4.5)+'px',dkFmt(v)));});
-  o.years.forEach((y,i)=>add(dkEl('dk-xl','left:'+(xp(i)-13)+'px;top:'+(pb+3.6)+'px;width:26px',y)));
+  o.years.forEach((y,i)=>dkXRot(slide,xp(i),pb+3.4,y));
   if(o.thr!=null){
     const y=yp(o.thr);
     add(dkEl('', 'position:absolute;left:'+pl+'px;top:'+y+'px;width:'+pw+'px;height:0;border-top:1px dashed #E07F5C'));
@@ -982,23 +941,6 @@ function dkLine(slide,g,o){
     add(dkEl('dk-bar','left:'+(xp(n-1)-2.2)+'px;top:'+(yp(s.vals[n-1])-2.2)+'px;width:4.4px;height:4.4px;border-radius:50%;background:'+s.color));
   });
   dkLegendRight(slide,g,o.series,true);
-}
-/* barras divergentes (cambio de deuda por país), ancho completo */
-function dkDelta(slide,o){
-  const pl=112,pr=860,pt=194,pb=349,pw=pr-pl,ph=pb-pt,n=o.names.length;
-  const vmin=Math.min(0,...o.vals),vmax=Math.max(0,...o.vals);
-  const step=[2,5,10,20].find(s=>(Math.ceil(vmax/s)-Math.floor(vmin/s))<=8)||20;
-  const lo=Math.floor(vmin/step)*step,hi=Math.ceil(vmax/step)*step;
-  const yp=v=>pt+ph*(1-(v-lo)/(hi-lo)),add=el=>{slide.appendChild(el);return el;};
-  add(dkEl('dk-ct','left:'+((pl+pr)/2-150)+'px;top:169.11px;width:300px',o.title));
-  for(let v=lo;v<=hi+1e-9;v+=step){const y=yp(v);add(dkEl('dk-gl','left:'+pl+'px;top:'+(y-.35)+'px;width:'+pw+'px'));add(dkEl('dk-yl','left:'+(pl-36.7)+'px;top:'+(y-4.5)+'px',String(v)));}
-  const pitch=pw/n,bw=pitch*0.6,y0=yp(0);
-  o.vals.forEach((v,i)=>{
-    const x=pl+i*pitch+(pitch-bw)/2,yv=yp(v),top=Math.min(y0,yv),h=Math.abs(yv-y0);
-    add(dkEl('dk-bar','left:'+x+'px;top:'+top+'px;width:'+bw+'px;height:'+h+'px;background:'+(v>=0?'#E07F5C':'#7BC143')));
-    add(dkEl('dk-xl','left:'+(x+bw/2-20)+'px;top:'+(v>=0?yv-9.5:yv+1.5)+'px;width:40px',(v>0?'+':'')+v.toFixed(1)));
-    add(dkEl('dk-xl','left:'+(pl+i*pitch)+'px;top:'+(pb+3.6)+'px;width:'+pitch+'px',o.names[i]));
-  });
 }
 /* barras agrupadas por categoría (año) con 2 series de color fijo */
 function dkSeriesBars(slide,g,o){
@@ -1011,25 +953,22 @@ function dkSeriesBars(slide,g,o){
   for(let v=0;v<=top+1e-9;v+=step){const y=pt+ph*(1-v/top);add(dkEl('dk-gl','left:'+pl+'px;top:'+(y-.35)+'px;width:'+pw+'px'));add(dkEl('dk-yl','left:'+(pl-36.7)+'px;top:'+(y-4.5)+'px',String(v)));}
   const pitch=pw/n,grp=pitch*0.78,period=grp/ns,off=(pitch-grp)/2;
   o.cats.forEach((c,ci)=>{
-    add(dkEl('dk-xl','left:'+(pl+ci*pitch)+'px;top:'+(pb+3.6)+'px;width:'+pitch+'px',c));
+    dkXRot(slide,pl+ci*pitch+pitch/2,pb+3.4,c);
     o.series.forEach((s,si)=>{const h=ph*s.vals[ci]/top;add(dkEl('dk-bar','left:'+(pl+ci*pitch+off+si*period)+'px;top:'+(pb-h)+'px;width:'+(period-1.5)+'px;height:'+h+'px;background:'+s.color));});
   });
   dkLegendRight(slide,g,o.series,false);
 }
 function dkTrackerSlides(info,startNum){
-  const base='Fuente: '+PDF_META.srcName+', '+info.ed;
+  const base='Fuente: '+PDF_META.srcName+', '+info.edLow;
   const CL={w:'#7BC143',a:'#5D7082',e:'#B3D88C',l:'#E07F5C'};
-  const ES={'US':'EE. UU.','Japan':'Japón','Germany':'Alemania','France':'Francia','UK':'R. Unido','Italy':'Italia','Canada':'Canadá','Brazil':'Brasil','Russia':'Rusia','South Africa':'Sudáfrica','Saudi Arabia':'A. Saudita','Kenya':'Kenia'};
-  const s1=dkContent(startNum,'Deuda Bruta y Balance Fiscal por Grupo',base+' (Tablas A7/A15/A21 y A1/A9/A17). Línea punteada: umbral de 100% del PIB, alcanzado en 2029 según la proyección de referencia.');
-  dkLine(s1,DK_GEO.s4L,{title:'Deuda Bruta por Grupo (% del PIB)',years:YEARS,thr:100,thrLabel:'100% del PIB',series:[{label:'Mundo',color:CL.w,w:2,vals:DEBT_WORLD},{label:'Avanzadas',color:CL.a,vals:DEBT_AE},{label:'Emergentes',color:CL.e,vals:DEBT_EM},{label:'Bajo ingreso',color:CL.l,vals:DEBT_LIDC}]});
+  const s1=dkContent(startNum,'Deuda Bruta y Balance Fiscal',base+' (Tablas A7/A15/A21 y A1/A9/A17). Línea punteada: umbral de 100% del PIB, alcanzado en 2029 según la proyección de referencia.');
+  dkLine(s1,DK_GEO.s4L,{title:'Deuda Bruta (% del PIB)',years:YEARS,thr:100,thrLabel:'100% del PIB',series:[{label:'Mundo',color:CL.w,w:2,vals:DEBT_WORLD},{label:'Avanzadas',color:CL.a,vals:DEBT_AE},{label:'Emergentes',color:CL.e,vals:DEBT_EM},{label:'Bajo ingreso',color:CL.l,vals:DEBT_LIDC}]});
   dkLine(s1,DK_GEO.s4R,{title:'Balance Fiscal General (% del PIB)',years:YEARS,series:[{label:'Mundo',color:CL.w,w:2,vals:BAL_WORLD},{label:'Avanzadas',color:CL.a,vals:BAL_AE},{label:'Emergentes',color:CL.e,vals:BAL_EM},{label:'Bajo ingreso',color:CL.l,vals:BAL_LIDC}]});
-  const s2=dkContent(startNum+1,'Cambio en la Deuda por País, 2025 → 2031',base+'. Coral: la deuda proyectada sube; verde: baja.');
-  dkDelta(s2,{title:'Cambio en deuda 2025 → 2031 (puntos del PIB)',names:CH_NAMES.map(n=>ES[n]||n),vals:CH_DELTA});
-  const s3=dkContent(startNum+2,'Economías Avanzadas vs. Emergentes por Año',base+' (Tabla 1.2 y Tablas A8/A16). Deuda neta = deuda bruta menos activos financieros. El promedio de emergentes excluye países sin deuda neta publicada (p. ej. China, India).');
-  const yrs=YR_IDX.map(i=>YEARS[i]),pk=a=>YR_IDX.map(i=>a[i]);
+  const s3=dkContent(startNum+1,'Economías Avanzadas vs. Emergentes',base+' (Tabla 1.2 y Tablas A8/A16). Deuda neta = deuda bruta menos activos financieros. El promedio de emergentes excluye países sin deuda neta publicada (p. ej. China, India).');
+  const yrs=YEARS,pk=a=>a;   // año a año (2019–2031)
   dkSeriesBars(s3,DK_GEO.s4L,{title:'Deuda Bruta % PIB',cats:yrs,series:[{label:'Avanzadas',color:CL.a,vals:pk(DEBT_AE)},{label:'Emergentes',color:CL.w,vals:pk(DEBT_EM)}]});
   dkSeriesBars(s3,DK_GEO.s4R,{title:'Deuda Neta % PIB',cats:yrs,series:[{label:'Avanzadas',color:CL.a,vals:pk(NET_AE)},{label:'Emergentes',color:CL.w,vals:pk(NET_EM)}]});
-  return[s1,s2,s3];
+  return[s1,s3];
 }
 
 function pdfBuildSlides(info){
